@@ -3,6 +3,7 @@
 ![cordova-plugin-health](https://badgers.space/badge/npm/cordova-plugin-health/cyan) 
 ![MIT license](https://badgers.space/badge/license/mit/cyan)  
 
+FORKED FROM  https://github.com/dariosalvi78/cordova-plugin-health
 
 A plugin that abstracts fitness and health repositories like Apple HealthKit or Google Health Connect.
 

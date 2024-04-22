@@ -35,7 +35,7 @@ public class BasalBodyTemperatureFunctions {
         obj.put("startDate", btDP.getTime().toEpochMilli());
         obj.put("endDate",  btDP.getTime().toEpochMilli());
 
-        double bt = btDP.Temperature().getCelsius();
+        double bt = btDP.getTemperature().getCelsius();
         obj.put("value", bt);
         obj.put("unit", "celsius");
         

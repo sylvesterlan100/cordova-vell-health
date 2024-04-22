@@ -32,10 +32,10 @@ public class RestingHeartRateFunctions {
 
     public static void populateFromQuery(Record datapoint, JSONObject obj) throws JSONException {
         RestingHeartRateRecord rhrDP = (RestingHeartRateRecord) datapoint;
-        obj.put("startDate", rhrDP.time.toEpochMilli());
-        obj.put("endDate",  rhrDP.time.toEpochMilli());
+        obj.put("startDate", rhrDP.getTime().toEpochMilli());
+        obj.put("endDate",  rhrDP.getTime().toEpochMilli());
 
-        long rhr = rhrDP.beatsPerMinute;
+        long rhr = rhrDP.getBeatsPerMinute();
         obj.put("value", rhr);
         obj.put("unit", "celsius");
         

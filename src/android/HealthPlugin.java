@@ -19,8 +19,10 @@ import androidx.health.connect.client.aggregate.AggregationResultGroupedByDurati
 import androidx.health.connect.client.aggregate.AggregationResultGroupedByPeriod;
 import androidx.health.connect.client.permission.HealthPermission;
 import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord;
+import androidx.health.connect.client.records.BasalBodyTemperatureRecord;
 import androidx.health.connect.client.records.BasalMetabolicRateRecord;
 import androidx.health.connect.client.records.BloodGlucoseRecord;
+import androidx.health.connect.client.records.BloodPressureRecord;
 import androidx.health.connect.client.records.BodyFatRecord;
 import androidx.health.connect.client.records.BodyTemperatureRecord;
 import androidx.health.connect.client.records.OxygenSaturationRecord;
@@ -29,12 +31,16 @@ import androidx.health.connect.client.records.ExerciseLap;
 import androidx.health.connect.client.records.ExerciseSegment;
 import androidx.health.connect.client.records.ExerciseSessionRecord;
 import androidx.health.connect.client.records.HeartRateRecord;
+import androidx.health.connect.client.records.HeartRateVariabilityRmssdRecord;
 import androidx.health.connect.client.records.HeightRecord;
 import androidx.health.connect.client.records.Record;
+import androidx.health.connect.client.records.RestingHeartRateRecord;
+import androidx.health.connect.client.records.RespiratoryRateRecord;
 import androidx.health.connect.client.records.SleepSessionRecord;
 import androidx.health.connect.client.records.StepsRecord;
 import androidx.health.connect.client.records.TotalCaloriesBurnedRecord;
 import androidx.health.connect.client.records.WeightRecord;
+import androidx.health.connect.client.records.Vo2MaxRecord;
 import androidx.health.connect.client.records.metadata.DataOrigin;
 import androidx.health.connect.client.records.metadata.Device;
 import androidx.health.connect.client.records.metadata.Metadata;
@@ -302,6 +308,18 @@ public class HealthPlugin extends CordovaPlugin {
         if (name.equalsIgnoreCase("oxygen_saturation")) {
             return OxygenSaturationFunctions.dataTypeToClass();
         }
+        if (name.equalsIgnoreCase("blood_pressure")) {
+            return BloodPressureFunctions.dataTypeToClass();
+        }
+        if (name.equalsIgnoreCase("heart_rate_variability")) {
+            return HeartRateVariabilityFunctions.dataTypeToClass();
+        }
+        if (name.equalsIgnoreCase("respiratory_rate")) {
+            return RespiratoryRateFunctions.dataTypeToClass();
+        }
+        if (name.equalsIgnoreCase("vo2max")) {
+            return VO2MaxFunctions.dataTypeToClass();
+        }
 
         return null;
     }
@@ -540,9 +558,7 @@ public class HealthPlugin extends CordovaPlugin {
                         DistanceRecord disanceR = (DistanceRecord) datapoint;
                         obj.put("startDate", disanceR.getStartTime().toEpochMilli());
                         obj.put("endDate", disanceR.getEndTime().toEpochMilli());
-
                         double meters = disanceR.getDistance().getMeters();
-
                         obj.put("value", meters);
                         obj.put("unit", "m");
                     } else if (datapoint instanceof SleepSessionRecord) {
@@ -551,7 +567,7 @@ public class HealthPlugin extends CordovaPlugin {
                     } else if (datapoint instanceof HeartRateRecord) {
                         oneElementPerRecord = false; // bpms are sent individually
                         HeartRateFunctions.populateFromQuery(datapoint, resultset);
-                    } else if (datapoint instanceof RestingHeartRateREcord) {
+                    } else if (datapoint instanceof RestingHeartRateRecord) {
                         RestingHeartRateFunctions.populateFromQuery(datapoint, obj);
                     } else if (datapoint instanceof BodyTemperatureRecord) {
                         BodyTemperatureFunctions.populateFromQuery(datapoint, obj);
@@ -559,7 +575,15 @@ public class HealthPlugin extends CordovaPlugin {
                         BasalBodyTemperatureFunctions.populateFromQuery(datapoint, obj);
                     } else if (datapoint instanceof OxygenSaturationRecord) {
                         OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
-                    } else {
+                    } else if (datapoint instanceof BloodPressureFunctions) {
+                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
+                    }  else if (datapoint instanceof HeartRateVariabilityFunctions) {
+                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
+                    }  else if (datapoint instanceof RespiratoryRateFunctions) {
+                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
+                    }  else if (datapoint instanceof VO2MaxFunctions) {
+                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
+                    }  else {
                         callbackContext.error("Sample received of unknown type " + datatype.toString());
                         return;
                     }

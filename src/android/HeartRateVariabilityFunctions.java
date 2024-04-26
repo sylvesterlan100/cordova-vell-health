@@ -35,9 +35,9 @@ public class HeartRateVariabilityFunctions {
         obj.put("startDate", hrvDP.getTime().toEpochMilli());
         obj.put("endDate",  hrvDP.getTime().toEpochMilli());
 
-        double hrv = hrvDP.getTemperature().getCelsius();
-        obj.put("value", bt);
-        obj.put("unit", "celsius");
+        double hrv = hrvDP.getHeartRateVariabilityMillis();
+        obj.put("value", hrv);
+        obj.put("unit", "ms");
         
     }
 

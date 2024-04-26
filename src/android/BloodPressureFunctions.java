@@ -35,9 +35,17 @@ public class BloodPressureFunctions {
         obj.put("startDate", bpDP.getTime().toEpochMilli());
         obj.put("endDate",  bpDP.getTime().toEpochMilli());
 
-        double bp = bpDP.getTemperature().getCelsius();
-        obj.put("value", bt);
-        obj.put("unit", "celsius");
+        JSONObject bpobj = new JSONObject();
+
+
+        double sbp = bpDP.getDiastolic().getMillimetersOfMercury();
+        double dbp = bpDP.getSystolic().getMillimetersOfMercury();
+        bpobj.put("systolic", sbp);
+        bpobj.put("diastolic", dbp);
+
+
+        obj.put("value", bpobj);
+        obj.put("unit", "mmHg");
         
     }
 

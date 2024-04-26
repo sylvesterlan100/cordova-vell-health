@@ -35,9 +35,9 @@ public class RespiratoryRateFunctions {
         obj.put("startDate", rrDP.getTime().toEpochMilli());
         obj.put("endDate",  rrDP.getTime().toEpochMilli());
 
-        double rr = rrDP.getTemperature().getCelsius();
-        obj.put("value", bt);
-        obj.put("unit", "celsius");
+        double rr = rrDP.getRate();
+        obj.put("value", rr);
+        obj.put("unit", "count");
         
     }
 

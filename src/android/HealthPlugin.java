@@ -281,11 +281,11 @@ public class HealthPlugin extends CordovaPlugin {
         if (name.equalsIgnoreCase("calories.basal")) {
             return kotlin.jvm.JvmClassMappingKt.getKotlinClass(BasalMetabolicRateRecord.class);
         }
-        if (name.equalsIgnoreCase("blood_glucose")) {
-            return BloodGlucoseFunctions.dataTypeToClass();
-        }
         if (name.equalsIgnoreCase("distance")) {
             return kotlin.jvm.JvmClassMappingKt.getKotlinClass(DistanceRecord.class);
+        }
+        if (name.equalsIgnoreCase("blood_glucose")) {
+            return BloodGlucoseFunctions.dataTypeToClass();
         }
         if (name.equalsIgnoreCase("height")) {
             return HeightFunctions.dataTypeToClass();
@@ -311,7 +311,7 @@ public class HealthPlugin extends CordovaPlugin {
         if (name.equalsIgnoreCase("blood_pressure")) {
             return BloodPressureFunctions.dataTypeToClass();
         }
-        if (name.equalsIgnoreCase("heart_rate_variability")) {
+        if (name.equalsIgnoreCase("heart_rate.variability")) {
             return HeartRateVariabilityFunctions.dataTypeToClass();
         }
         if (name.equalsIgnoreCase("respiratory_rate")) {
@@ -453,6 +453,7 @@ public class HealthPlugin extends CordovaPlugin {
             }
             String datatype = args.getJSONObject(0).getString("dataType");
             KClass<? extends Record> dt = dataTypeNameToClass(datatype);
+
             if (dt == null) {
                 callbackContext.error("Datatype " + datatype + " not supported");
                 return;
@@ -481,6 +482,7 @@ public class HealthPlugin extends CordovaPlugin {
             TimeRangeFilter timeRange = TimeRangeFilter.between(Instant.ofEpochMilli(st), Instant.ofEpochMilli(et));
             HashSet<DataOrigin> dor = new HashSet<>();
             ReadRecordsRequest request = new ReadRecordsRequest(dt, timeRange, dor, ascending, limit, null);
+                        
             // see https://kt.academy/article/cc-other-languages
             ReadRecordsResponse response = BuildersKt.runBlocking(
                     EmptyCoroutineContext.INSTANCE,
@@ -575,19 +577,18 @@ public class HealthPlugin extends CordovaPlugin {
                         BasalBodyTemperatureFunctions.populateFromQuery(datapoint, obj);
                     } else if (datapoint instanceof OxygenSaturationRecord) {
                         OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
-                    } else if (datapoint instanceof BloodPressureFunctions) {
-                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
-                    }  else if (datapoint instanceof HeartRateVariabilityFunctions) {
-                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
-                    }  else if (datapoint instanceof RespiratoryRateFunctions) {
-                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
-                    }  else if (datapoint instanceof VO2MaxFunctions) {
-                        OxygenSaturationFunctions.populateFromQuery(datapoint, obj);
+                    } else if (datapoint instanceof BloodPressureRecord) {
+                        BloodPressureFunctions.populateFromQuery(datapoint, obj);
+                    }  else if (datapoint instanceof HeartRateVariabilityRmssdRecord) {
+                        HeartRateVariabilityFunctions.populateFromQuery(datapoint, obj);
+                    }  else if (datapoint instanceof RespiratoryRateRecord) {
+                        RespiratoryRateFunctions.populateFromQuery(datapoint, obj);
+                    }  else if (datapoint instanceof Vo2MaxRecord) {
+                        VO2MaxFunctions.populateFromQuery(datapoint, obj);
                     }  else {
-                        callbackContext.error("Sample received of unknown type " + datatype.toString());
+                        callbackContext.error("Sample received of unknown type " + datatype.toString() + ": " + datapointObj.getClass().getName());
                         return;
                     }
-
                     // add to result array
                     if (oneElementPerRecord) {
                         resultset.put(obj);

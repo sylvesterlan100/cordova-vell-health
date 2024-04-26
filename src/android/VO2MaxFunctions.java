@@ -35,9 +35,9 @@ public class VO2MaxFunctions {
         obj.put("startDate", voDP.getTime().toEpochMilli());
         obj.put("endDate",  voDP.getTime().toEpochMilli());
 
-        double vo = voDP.getTemperature().getCelsius();
-        obj.put("value", bt);
-        obj.put("unit", "celsius");
+        double vo = voDP.getVo2MillilitersPerMinuteKilogram();
+        obj.put("value", vo);
+        obj.put("unit", "ml/kg/min");
         
     }
 

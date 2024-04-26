@@ -35,58 +35,58 @@ public class BloodGlucoseFunctions {
         // `sleep` can be (iOS only): 'fully_awake', 'before_sleep', 'on_waking', 'during_sleep'
         //  source: 'capillary_blood' }
         // `source` can be: 'capillary_blood' ,'interstitial_fluid', 'plasma', 'serum', 'tears', whole_blood', 'unknown'
-        JSONObject glucob = new JSONObject();
-        glucob.put("glucose", val);
+        // JSONObject glucob = new JSONObject();
+        // glucob.put("glucose", val);
 
-        int temp_to_meal = bloodGlucose.getRelationToMeal();
-        String meal = "";
-        if (temp_to_meal == BloodGlucoseRecord.RELATION_TO_MEAL_AFTER_MEAL) {
-            meal = "after_";
-        } else if (temp_to_meal == BloodGlucoseRecord.RELATION_TO_MEAL_BEFORE_MEAL) {
-            meal = "before_";
-        } else if (temp_to_meal == BloodGlucoseRecord.RELATION_TO_MEAL_FASTING) {
-            meal = "fasting_";
-        } else {
-            meal = "";
-        }
+        // int temp_to_meal = bloodGlucose.getRelationToMeal();
+        // String meal = "";
+        // if (temp_to_meal == BloodGlucoseRecord.RELATION_TO_MEAL_AFTER_MEAL) {
+        //     meal = "after_";
+        // } else if (temp_to_meal == BloodGlucoseRecord.RELATION_TO_MEAL_BEFORE_MEAL) {
+        //     meal = "before_";
+        // } else if (temp_to_meal == BloodGlucoseRecord.RELATION_TO_MEAL_FASTING) {
+        //     meal = "fasting_";
+        // } else {
+        //     meal = "";
+        // }
 
-        temp_to_meal = bloodGlucose.getMealType();
-        if (temp_to_meal == MealType.MEAL_TYPE_BREAKFAST) {
-            meal += "breakfast";
-        } else if (temp_to_meal == MealType.MEAL_TYPE_DINNER) {
-            meal += "dinner";
-        } else if (temp_to_meal == MealType.MEAL_TYPE_LUNCH) {
-            meal += "lunch";
-        } else if (temp_to_meal == MealType.MEAL_TYPE_SNACK) {
-            meal += "snack";
-        } else {
-            meal += "unknown";
-        }
+        // temp_to_meal = bloodGlucose.getMealType();
+        // if (temp_to_meal == MealType.MEAL_TYPE_BREAKFAST) {
+        //     meal += "breakfast";
+        // } else if (temp_to_meal == MealType.MEAL_TYPE_DINNER) {
+        //     meal += "dinner";
+        // } else if (temp_to_meal == MealType.MEAL_TYPE_LUNCH) {
+        //     meal += "lunch";
+        // } else if (temp_to_meal == MealType.MEAL_TYPE_SNACK) {
+        //     meal += "snack";
+        // } else {
+        //     meal += "unknown";
+        // }
 
-        glucob.put("meal", meal);
+        // glucob.put("meal", meal);
 
-        String source = "";
-        int sourceInt = bloodGlucose.getSpecimenSource();
-        if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_INTERSTITIAL_FLUID) {
-            source = "interstitial_fluid";
-        } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_CAPILLARY_BLOOD) {
-            source = "capillary_blood";
-        } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_PLASMA) {
-            source = "plasma";
-        } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_SERUM) {
-            source = "serum";
-        } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_TEARS) {
-            source = "tears";
-        } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_WHOLE_BLOOD) {
-            source = "whole_blood";
-        } else  {
-            source = "unknown";
-        }
+        // String source = "";
+        // int sourceInt = bloodGlucose.getSpecimenSource();
+        // if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_INTERSTITIAL_FLUID) {
+        //     source = "interstitial_fluid";
+        // } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_CAPILLARY_BLOOD) {
+        //     source = "capillary_blood";
+        // } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_PLASMA) {
+        //     source = "plasma";
+        // } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_SERUM) {
+        //     source = "serum";
+        // } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_TEARS) {
+        //     source = "tears";
+        // } else if (sourceInt == BloodGlucoseRecord.SPECIMEN_SOURCE_WHOLE_BLOOD) {
+        //     source = "whole_blood";
+        // } else  {
+        //     source = "unknown";
+        // }
 
-        glucob.put("source", source);
+        // glucob.put("source", source);
 
 
-        obj.put("value", glucob);
+        obj.put("value", val);
         obj.put("unit", "mmol/L");
     }
 
